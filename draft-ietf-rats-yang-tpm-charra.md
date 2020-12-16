@@ -162,7 +162,7 @@ container \<attester-supported-algos\> - Identifies which TCG algorithms are ava
 
 #### YANG Module
 ~~~ YANG
-<CODE BEGINS> file ietf-tpm-remote-attestation@2020-12-09.yang
+<CODE BEGINS> file "ietf-tpm-remote-attestation@2020-12-09.yang"
 {::include ietf-tpm-remote-attestation.yang}
 <CODE ENDS>
 ~~~
@@ -187,7 +187,7 @@ The third are specific algorithm types.   Each algorithm type defines what crypt
 
 #### YANG Module
 ~~~~ YANG
-<CODE BEGINS> ietf-tcg-algs@2020-09-18.yang
+<CODE BEGINS> file "ietf-tcg-algs@2020-09-18.yang"
 {::include ietf-tcg-algs@2020-09-18.yang}
 <CODE ENDS>
 ~~~~
@@ -229,6 +229,10 @@ RPC: \<log-retrieval\> - Pulling lots of logs can chew up system resources.
 Not yet.
 
 #  Change Log
+
+Changes from version 04 to version 05:
+
+* YANG Dr requested updates
 
 Changes from version 03 to version 04:
 
