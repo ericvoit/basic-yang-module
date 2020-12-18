@@ -127,17 +127,23 @@ This document is based on the terminology defined in the {{-rats-architecture}} 
 
 One or more TPMs MUST be embedded in the composite device that is providing attestation evidence via the YANG module defined in this document. The ietf-basic-remote-attestation YANG module enables a composite device to take on the role of Claimant and Attester in accordance with the Remote Attestation Procedures (RATS) architecture {{-rats-architecture}} and the corresponding challenge-response interaction model defined in the {{-rats-interaction-models}} document. A fresh nonce with an appropriate amount of entropy MUST be supplied by the YANG client in order to enable a proof-of-freshness with respect to the attestation evidence provided by the attester running the YANG datastore. The functions of this YANG module are restricted to 0-1 TPMs per hardware component.
 
-## Tree Diagram
-
-~~~ TREE
-{::include ietf-tpm-remote-attestation.tree}
-~~~
-
 ## YANG Modules
 
 
 ### ietf-tpm-remote-attestation
 This YANG module imports modules from {{-ietf-yang-types}}, {{-ietf-hardware}}, {{-ietf-keystore}}, ietf-tcg-algs.yang.
+
+#### Features
+
+This module supports the following features:
+
+\<TPMs\> - Indicates that multiple TPMs on the device can support remote attestation,  This feature is applicable in cases where multiple line cards, each with its own TPM.
+
+\<bios\>  - Indicates the device supports the retrieval of bios event logs.
+ 
+\<ima\> - Indicates the device supports the retrieval of Integrity Measurement Architecture event logs.
+
+\<netequip_boot\> - Indicates the device supports the retrieval of netequip boot event logs.
 
 #### Identities
 
@@ -145,13 +151,33 @@ This module supports the following types of attestation event logs: \<ima\>, \<b
 
 #### RPCs
 
-\<tpm12-challenge-response-attestation\> - Allows a Verifier to request a quote of PCRs from a TPM1.2 compliant cryptoprocessor.  When one or more \<certificate-name\> is not provided, all TPM1.2 compliant cryptoprocessors will respond.
+\<tpm12-challenge-response-attestation\> - Allows a Verifier to request a quote of PCRs from a TPM1.2 compliant cryptoprocessor.  Where the feature \<TPMs\> is active, and one or more \<certificate-name\> is not provided, all TPM1.2 compliant cryptoprocessors will respond.  A YANG tree diagram of this RPC is as follows:
 
-\<tpm20-challenge-response-attestation\> - Allows a Verifier to request a quote of PCRs from a TPM2.0 compliant cryptoprocessor.  When one or more \<certificate-name\> is not provided, all TPM2.0 compliant cryptoprocessors will respond.
+~~~ TREE
+{::include tpm12-challenge-response-attestation.tree}
+~~~
 
-\<log-retrieval\> - Allows a Verifier to acquire the evidence which was extended into specific PCRs.
+\<tpm20-challenge-response-attestation\> - Allows a Verifier to request a quote of PCRs from a TPM2.0 compliant cryptoprocessor.  Where the feature \<TPMs\> is active, and one or more \<certificate-name\> is not provided, all TPM2.0 compliant cryptoprocessors will respond.   A YANG tree diagram of this RPC is as follows:
+
+~~~ TREE
+{::include tpm20-challenge-response-attestation.tree}
+~~~
+
+\<log-retrieval\> - Allows a Verifier to acquire the evidence which was extended into specific PCRs.   A YANG tree diagram of this RPC is as follows:
+
+~~~ TREE
+{::include log-retrieval.tree}
+~~~
 
 #### Data Nodes
+
+The data nodes containing the configuration and operational objects with the YANG model are as follows:
+
+~~~ TREE
+{::include charra-data-nodes.tree}
+~~~
+
+Key elements of the tree are as follows:
 
 container \<rats-support-structures\> - This exists when there are more than one TPM for a particular Attester.  This allows each specific TPM to identify on which \<compute-node\> it belongs.
 
