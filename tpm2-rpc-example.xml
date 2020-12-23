@@ -1,0 +1,39 @@
+<rpc message-id="101" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <tpm20-challenge-response-attestation>
+      xmlns="urn:ietf:params:xml:ns:yang:ietf-tpm-remote-attestation">
+    <nonce>110101010110011011111001010010100</nonce>
+    <tpm20-pcr-selection>
+      <TPM20-hash-algo 
+          xmlns="urn:ietf:params:xml:ns:yang:ietf-tcg-algs">
+        taa:TPM_ALG_SHA256
+      </TPM20-hash-algo>
+      <pcr-index>0</pcr-index>
+      <pcr-index>1</pcr-index>
+      <pcr-index>2</pcr-index>
+      <pcr-index>3</pcr-index>
+      <pcr-index>4</pcr-index>
+      <pcr-index>5</pcr-index>
+      <pcr-index>6</pcr-index>
+      <pcr-index>7</pcr-index>
+    </tpm20-pcr-selection>
+  </tpm20-challenge-response-attestation>
+</rpc>
+
+<rpc-reply message-id="101"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <tpm12-attestation-response
+    xmlns="urn:ietf:params:xml:ns:yang:ietf-tpm-remote-attestation">
+    <certificate-name>
+       (reference to certificate)
+    </certificate-name>
+    <TPMS_QUOTE_INFO>
+       (raw information from the TPM Quote)
+    </TPMS_QUOTE_INFO>
+    <quote-signature>
+        (signature across TPMS_QUOTE_INFO)
+    </quote-signature>
+    <up-time>
+      10000
+    </up-time>
+  </tpm12-attestation-response>
+</rpc-reply>
